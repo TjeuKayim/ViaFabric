@@ -12,7 +12,10 @@
     "client.MixinConnectScreenThread",
     "client.MixinDebugHud",
     "client.MixinMultiplayerScreen",
+    "client.MixinMultiplayerServerListPingerListener",
     "client.MixinServerAddress",
+    "client.MixinServerEntry",
+    "client.MixinServerInfo",
     "client.MixinServerPinger"
   ],
   "injectors": {

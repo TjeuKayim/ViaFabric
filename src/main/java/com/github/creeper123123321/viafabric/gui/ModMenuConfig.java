@@ -23,32 +23,21 @@
  * SOFTWARE.
  */
 
-package com.github.creeper123123321.viafabric.mixin.client;
+package com.github.creeper123123321.viafabric.gui;
 
-import com.github.creeper123123321.viafabric.ViaFabricAddress;
-import net.minecraft.network.ServerAddress;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import io.github.prospector.modmenu.api.ModMenuApi;
+import net.minecraft.client.gui.screen.Screen;
 
-@Mixin(ServerAddress.class)
-public abstract class MixinServerAddress {
-    @Redirect(method = "parse", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ServerAddress;resolveSrv(Ljava/lang/String;)[Ljava/lang/String;"))
-    private static String[] modifySrvAddr(String address) {
-        ViaFabricAddress viaAddr = new ViaFabricAddress().parse(address);
-        if (viaAddr.viaSuffix == null) {
-            return resolveSrv(address);
-        }
+import java.util.function.Function;
 
-        String[] resolvedSrv = resolveSrv(viaAddr.realAddress);
-        resolvedSrv[0] = resolvedSrv[0].replaceAll("\\.$", "") + "." + viaAddr.viaSuffix;
-
-        return resolvedSrv;
+public class ModMenuConfig implements ModMenuApi {
+    @Override
+    public String getModId() {
+        return "viafabric";
     }
 
-    @Shadow
-    private static String[] resolveSrv(String address) {
-        throw new IllegalStateException();
+    @Override
+    public Function<Screen, ? extends Screen> getConfigScreenFactory() {
+        return ViaConfigScreen::new;
     }
 }

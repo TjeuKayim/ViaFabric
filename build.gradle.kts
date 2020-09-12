@@ -19,7 +19,7 @@ val branch = if (!travisBranch.isNullOrBlank()) travisBranch else try {
     "unknown"
 }
 
-version = "0.2.10-SNAPSHOT+" + try {
+version = "0.2.11-SNAPSHOT+" + try {
     gitVersion() + "-" + branch
 } catch (e: Exception) {
     "unknown"
@@ -58,8 +58,8 @@ tasks.named<ProcessResources>("processResources") {
 
 dependencies {
     // transitive = false because Guava is conflicting on runClient
-    implementation("us.myles:viaversion:3.1.0") { isTransitive = false }
-    include("us.myles:viaversion:3.1.0")
+    implementation("us.myles:viaversion:3.1.1") { isTransitive = false }
+    include("us.myles:viaversion:3.1.1")
     include("org.yaml:snakeyaml:1.26")
 
     // Use 1.14.4 release, probably intermediary will make it work on snapshots
@@ -69,6 +69,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.8.2+build.194")
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.13.1+build.257-1.14")
+    modImplementation("io.github.prospector:modmenu:1.7.16.1.14.4+build.128")
 
     modImplementation("io.github.cottonmc:cotton-client-commands:1.0.0+1.15.2")
     include("io.github.cottonmc:cotton-client-commands:1.0.0+1.15.2")
@@ -108,6 +109,7 @@ curseforge {
                 addGameVersion("1.16")
                 addGameVersion("1.16.1")
                 addGameVersion("1.16.2")
+                addGameVersion("1.16.3")
             }
         }
         addGameVersion("Fabric")

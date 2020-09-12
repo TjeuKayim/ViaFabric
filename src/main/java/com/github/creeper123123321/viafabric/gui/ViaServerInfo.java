@@ -23,32 +23,12 @@
  * SOFTWARE.
  */
 
-package com.github.creeper123123321.viafabric.mixin.client;
+package com.github.creeper123123321.viafabric.gui;
 
-import com.github.creeper123123321.viafabric.ViaFabricAddress;
-import net.minecraft.network.ServerAddress;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+public interface ViaServerInfo {
+    boolean isViaTranslating();
+    void setViaTranslating(boolean via);
 
-@Mixin(ServerAddress.class)
-public abstract class MixinServerAddress {
-    @Redirect(method = "parse", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ServerAddress;resolveSrv(Ljava/lang/String;)[Ljava/lang/String;"))
-    private static String[] modifySrvAddr(String address) {
-        ViaFabricAddress viaAddr = new ViaFabricAddress().parse(address);
-        if (viaAddr.viaSuffix == null) {
-            return resolveSrv(address);
-        }
-
-        String[] resolvedSrv = resolveSrv(viaAddr.realAddress);
-        resolvedSrv[0] = resolvedSrv[0].replaceAll("\\.$", "") + "." + viaAddr.viaSuffix;
-
-        return resolvedSrv;
-    }
-
-    @Shadow
-    private static String[] resolveSrv(String address) {
-        throw new IllegalStateException();
-    }
+    int getViaServerVer();
+    void setViaServerVer(int ver);
 }

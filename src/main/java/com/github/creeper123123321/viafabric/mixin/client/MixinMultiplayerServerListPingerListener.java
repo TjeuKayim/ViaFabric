@@ -25,30 +25,28 @@
 
 package com.github.creeper123123321.viafabric.mixin.client;
 
-import com.github.creeper123123321.viafabric.ViaFabricAddress;
-import net.minecraft.network.ServerAddress;
+import com.github.creeper123123321.viafabric.gui.ViaServerInfo;
+import com.github.creeper123123321.viafabric.handler.clientside.VRDecodeHandler;
+import net.minecraft.client.network.ServerInfo;
+import net.minecraft.network.ClientConnection;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ServerAddress.class)
-public abstract class MixinServerAddress {
-    @Redirect(method = "parse", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ServerAddress;resolveSrv(Ljava/lang/String;)[Ljava/lang/String;"))
-    private static String[] modifySrvAddr(String address) {
-        ViaFabricAddress viaAddr = new ViaFabricAddress().parse(address);
-        if (viaAddr.viaSuffix == null) {
-            return resolveSrv(address);
+@Mixin(targets = "net.minecraft.client.network.MultiplayerServerListPinger$1")
+public abstract class MixinMultiplayerServerListPingerListener {
+    @Shadow
+    public abstract ClientConnection getConnection();
+
+    @Redirect(method = "onResponse(Lnet/minecraft/network/packet/s2c/query/QueryResponseS2CPacket;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ServerInfo;setIcon(Ljava/lang/String;)V"))
+    private void onResponseCaptureEntry(ServerInfo serverInfo, String string) {
+        VRDecodeHandler decoder = ((MixinClientConnectionAccessor) getConnection()).getChannel().pipeline().get(VRDecodeHandler.class);
+        if (decoder != null) {
+            ((ViaServerInfo) serverInfo).setViaTranslating(decoder.getInfo().isActive());
+            ((ViaServerInfo) serverInfo).setViaServerVer(decoder.getInfo().getProtocolInfo().getServerProtocolVersion());
         }
 
-        String[] resolvedSrv = resolveSrv(viaAddr.realAddress);
-        resolvedSrv[0] = resolvedSrv[0].replaceAll("\\.$", "") + "." + viaAddr.viaSuffix;
-
-        return resolvedSrv;
-    }
-
-    @Shadow
-    private static String[] resolveSrv(String address) {
-        throw new IllegalStateException();
+        serverInfo.setIcon(string);
     }
 }

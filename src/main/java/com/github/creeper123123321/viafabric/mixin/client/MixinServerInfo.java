@@ -23,33 +23,32 @@
  * SOFTWARE.
  */
 
-package com.github.creeper123123321.viafabric.util;
+package com.github.creeper123123321.viafabric.mixin.client;
 
-import us.myles.ViaVersion.api.protocol.ProtocolVersion;
+import com.github.creeper123123321.viafabric.gui.ViaServerInfo;
+import net.minecraft.client.network.ServerInfo;
+import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.Arrays;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+@Mixin(ServerInfo.class)
+public class MixinServerInfo implements ViaServerInfo {
+    private boolean viaTranslating;
+    private int viaServerVer;
 
-public class VersionFormatFilter implements Predicate<String> {
+    public int getViaServerVer() {
+        return viaServerVer;
+    }
+
+    public void setViaServerVer(int viaServerVer) {
+        this.viaServerVer = viaServerVer;
+    }
+
     @Override
-    public boolean test(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException e) {
-            try {
-                Integer.parseInt(s + '0');
-                return true;
-            } catch (NumberFormatException e2) {
-                return ProtocolVersion.getProtocols().stream()
-                        .map(ProtocolVersion::getName)
-                        .flatMap(str -> Stream.concat(
-                                Arrays.stream(str.split("-")),
-                                Arrays.stream(new String[]{str})
-                        ))
-                        .anyMatch(ver -> ver.startsWith(s));
-            }
-        }
+    public boolean isViaTranslating() {
+        return viaTranslating;
+    }
+
+    @Override
+    public void setViaTranslating(boolean via) {
+        this.viaTranslating = via;
     }
 }

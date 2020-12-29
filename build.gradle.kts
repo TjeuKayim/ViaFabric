@@ -61,11 +61,9 @@ dependencies {
 
     // Use 1.8.9 Legacy Fabric https://github.com/Legacy-Fabric/fabric-example-mod/blob/master/gradle.properties
     implementation("com.google.guava:guava:23.5-jre")
-    minecraft("com.mojang:minecraft:1.8.9")
-    mappings("net.fabricmc:yarn:1.8.9+build.202008241659:v2")
-    modCompile("net.fabricmc:fabric-loader-1.8.9:0.8.7+build.202008300717") {
-        exclude(module = "guava")
-    }
+    minecraft("com.mojang:minecraft:1.12.2")
+    mappings("net.fabricmc:yarn:1.12.2+build.202012170747:v2")
+    modImplementation("com.github.shedaniel:fabric-loader:patch-1-SNAPSHOT")
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.7.3")
     modImplementation("com.github.shedaniel:modmenu-1.8.9:1.8.9-SNAPSHOT")

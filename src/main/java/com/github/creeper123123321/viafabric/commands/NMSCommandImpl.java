@@ -25,15 +25,17 @@
 
 package com.github.creeper123123321.viafabric.commands;
 
+import net.minecraft.class_1999;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandSource;
+import net.minecraft.server.dedicated.command.BanCommand;
 import net.minecraft.util.math.BlockPos;
 import us.myles.ViaVersion.commands.ViaCommandHandler;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class NMSCommandImpl extends AbstractCommand {
+public class NMSCommandImpl extends class_1999 {
     private ViaCommandHandler handler;
 
     public NMSCommandImpl(ViaCommandHandler handler) {

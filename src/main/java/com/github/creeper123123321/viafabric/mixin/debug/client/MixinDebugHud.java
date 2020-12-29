@@ -29,7 +29,7 @@ import com.github.creeper123123321.viafabric.handler.CommonTransformer;
 import com.github.creeper123123321.viafabric.handler.FabricDecodeHandler;
 import io.netty.channel.ChannelHandler;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.OverlayDebug;
+import net.minecraft.client.gui.hud.DebugHud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -40,9 +40,9 @@ import us.myles.ViaVersion.protocols.base.ProtocolInfo;
 
 import java.util.List;
 
-@Mixin(OverlayDebug.class)
+@Mixin(DebugHud.class)
 public class MixinDebugHud {
-    @Inject(at = @At("RETURN"), method = "method_2505")
+    @Inject(at = @At("RETURN"), method = "method_29095")
     protected void getLeftText(CallbackInfoReturnable<List<String>> info) {
         String line = "[ViaFabric] I: " + Via.getManager().getConnections().size() + " (F: "
                 + Via.getManager().getConnectedClients().size() + ")";

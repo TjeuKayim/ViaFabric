@@ -38,8 +38,8 @@ import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.LogManager;
 import us.myles.ViaVersion.api.Via;
@@ -215,7 +215,7 @@ public class VRPlatform implements ViaPlatform<UUID> {
         runServerSync(() -> {
             ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
             if (player == null) return;
-            player.sendMessage(Text.Serializer.deserialize(legacyToJson(s)));
+            player.sendMessage(Text.Serializer.fromJson(legacyToJson(s)));
         });
     }
 
@@ -233,7 +233,7 @@ public class VRPlatform implements ViaPlatform<UUID> {
             player.networkHandler.disconnect(s);
             return true;
         };
-        if (server.isOnThread()) {
+        if (server.method_34140()) {
             return kickTask.get();
         } else {
             ViaFabric.JLOGGER.log(Level.WARNING, "Weird!? Player kicking was called off-thread", new Throwable());

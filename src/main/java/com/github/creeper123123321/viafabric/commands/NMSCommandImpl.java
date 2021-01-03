@@ -26,9 +26,8 @@
 package com.github.creeper123123321.viafabric.commands;
 
 import net.minecraft.class_1999;
-import net.minecraft.command.AbstractCommand;
-import net.minecraft.command.CommandSource;
-import net.minecraft.server.dedicated.command.BanCommand;
+import net.minecraft.class_2010;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import us.myles.ViaVersion.commands.ViaCommandHandler;
 
@@ -43,32 +42,32 @@ public class NMSCommandImpl extends class_1999 {
     }
 
     @Override
-    public String getCommandName() {
+    public String method_29277() {
         return "viaversion";
     }
 
     @Override
-    public List<String> getAliases() {
+    public List<String> method_29274() {
         return Arrays.asList("vvfabric", "viaver");
     }
 
     @Override
-    public String getUsageTranslationKey(CommandSource commandSource) {
+    public String method_29275(class_2010 commandSource) {
         return "/viaversion [help|subcommand]";
     }
 
     @Override
-    public void execute(CommandSource commandSource, String[] strings) {
+    public void method_29272(MinecraftServer minecraftServer, class_2010 commandSource, String[] strings) {
         handler.onCommand(new NMSCommandSender(commandSource), strings);
     }
 
     @Override
-    public List<String> getAutoCompleteHints(CommandSource commandSource, String[] strings, BlockPos blockPos) {
+    public List<String> method_29273(MinecraftServer minecraftServer, class_2010 commandSource, String[] strings, BlockPos blockPos) {
         return handler.onTabComplete(new NMSCommandSender(commandSource), strings);
     }
 
     @Override
-    public int getPermissionLevel() {
+    public int method_28700() {
         return 3;
     }
 }

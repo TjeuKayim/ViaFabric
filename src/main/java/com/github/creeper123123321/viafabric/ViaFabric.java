@@ -103,6 +103,6 @@ public class ViaFabric implements ModInitializer {
 
     @SuppressWarnings("deprecation")
     private void registerCommandsV0() {
-        FabricCommandRegistry.INSTANCE.register(new NMSCommandImpl(Via.getManager().getCommandHandler()));
+        // todo fabric api FabricCommandRegistry.INSTANCE.register(new NMSCommandImpl(Via.getManager().getCommandHandler()));
     }
 }

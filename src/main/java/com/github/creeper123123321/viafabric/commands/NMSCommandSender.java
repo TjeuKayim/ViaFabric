@@ -25,7 +25,7 @@
 
 package com.github.creeper123123321.viafabric.commands;
 
-import net.minecraft.command.CommandSource;
+import net.minecraft.class_2010;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
 import us.myles.ViaVersion.api.command.ViaCommandSender;
@@ -35,21 +35,21 @@ import us.myles.viaversion.libs.bungeecordchat.chat.ComponentSerializer;
 import java.util.UUID;
 
 public class NMSCommandSender implements ViaCommandSender {
-    private final CommandSource source;
+    private final class_2010 source;
 
-    public NMSCommandSender(CommandSource source) {
+    public NMSCommandSender(class_2010 source) {
         this.source = source;
     }
 
     @Override
     public boolean hasPermission(String s) {
         // https://gaming.stackexchange.com/questions/138602/what-does-op-permission-level-do
-        return source.canUseCommand(3, "viaversion.admin"); // the string seems to be the command
+        return source.method_29603(3, "viaversion.admin"); // the string seems to be the command
     }
 
     @Override
     public void sendMessage(String s) {
-        source.sendMessage(Text.Serializer.deserialize(legacyToJson(s)));
+        source.sendMessage(Text.Serializer.fromJson(legacyToJson(s)));
     }
 
     private String legacyToJson(String legacy) {
@@ -67,7 +67,7 @@ public class NMSCommandSender implements ViaCommandSender {
     @Override
     public String getName() {
         if (source instanceof Entity) {
-            return source.getName().asString();
+            return source.getDisplayName().asString();
         }
         return "?";
     }

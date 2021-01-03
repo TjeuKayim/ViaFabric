@@ -63,10 +63,12 @@ dependencies {
     implementation("com.google.guava:guava:23.5-jre")
     minecraft("com.mojang:minecraft:1.12.2")
     mappings("net.fabricmc:yarn:1.12.2+build.202012241947:v2")
-    modImplementation("com.github.shedaniel:fabric-loader:patch-1-SNAPSHOT")
+    modImplementation("net.fabricmc:fabric-loader-1.8.9:0.9.3+build.202009100647") {
+        exclude(mapOf("module" to "guava"))
+    }
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.7.3")
-    modImplementation("com.github.shedaniel:modmenu-1.8.9:1.8.9-SNAPSHOT")
+    //modImplementation("net.fabricmc.fabric-api:fabric-api:0.7.3")
+    //modImplementation("com.github.shedaniel:modmenu-1.8.9:1.8.9-SNAPSHOT")
 
     //modImplementation("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
     //include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")

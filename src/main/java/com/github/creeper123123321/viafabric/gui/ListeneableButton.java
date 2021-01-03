@@ -43,8 +43,8 @@ public class ListeneableButton extends ButtonWidget {
     }
 
     @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-        super.mouseReleased(mouseX, mouseY);
+    public void method_29068(int mouseX, int mouseY) {
+        super.method_29068(mouseX, mouseY);
         click.accept(this);
     }
 }

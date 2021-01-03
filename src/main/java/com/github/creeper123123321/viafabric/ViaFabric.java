@@ -38,7 +38,6 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.channel.EventLoop;
 import io.netty.channel.local.LocalEventLoopGroup;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.registry.FabricCommandRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import us.myles.ViaVersion.ViaManager;

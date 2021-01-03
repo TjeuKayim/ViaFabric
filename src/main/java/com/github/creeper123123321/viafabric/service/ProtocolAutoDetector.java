@@ -65,7 +65,7 @@ public class ProtocolAutoDetector {
                     ViaFabricAddress viaAddr = new ViaFabricAddress().parse(address.getHostString());
 
                     ChannelFuture ch = new Bootstrap()
-                            .group(ClientConnection.field_5955.get())
+                            .group(ClientConnection.CLIENT_IO_GROUP.method_34021())
                             .channel(NioSocketChannel.class)
                             .handler(new ChannelInitializer<Channel>() {
                                 protected void initChannel(Channel channel) {
@@ -117,9 +117,9 @@ public class ProtocolAutoDetector {
                                     }
                                 });
 
-                                clientConnection.send(new HandshakeC2SPacket(ProtocolRegistry.SERVER_PROTOCOL, viaAddr.realAddress,
+                                clientConnection.method_32194(new HandshakeC2SPacket(viaAddr.realAddress,
                                         address.getPort(), NetworkState.STATUS));
-                                clientConnection.send(new QueryRequestC2SPacket());
+                                clientConnection.method_32194(new QueryRequestC2SPacket());
                             });
                         }
                     });

@@ -25,7 +25,7 @@
 
 package com.github.creeper123123321.viafabric.gui;
 
-import io.github.prospector.modmenu.api.ModMenuApi;
+/* import io.github.prospector.modmenu.api.ModMenuApi;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.util.function.Function;
@@ -41,3 +41,4 @@ public class ModMenuConfig implements ModMenuApi {
         return ViaConfigScreen::new;
     }
 }
+*/

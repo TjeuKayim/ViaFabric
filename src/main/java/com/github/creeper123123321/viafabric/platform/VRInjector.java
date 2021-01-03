@@ -54,7 +54,7 @@ public class VRInjector implements ViaInjector {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             return getClientProtocol();
         }
-        return MinecraftServer.getServer().getServerMetadata().getVersion().getProtocolVersion();
+        return VRPlatform.getServer().getServerMetadata().getVersion().getProtocolVersion();
     }
 
     @Environment(EnvType.CLIENT)

@@ -33,6 +33,7 @@ import com.github.creeper123123321.viafabric.util.JLoggerToLog4j;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.Version;
@@ -88,9 +89,16 @@ public class VRPlatform implements ViaPlatform<UUID> {
 
     public static MinecraftServer getServer() {
         // In 1.8.9 integrated server instance exists even if it's not running
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT
-                && !MinecraftClient.getInstance().isIntegratedServerRunning()) return null;
-        return MinecraftServer.getServer();
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            return getServerClient();
+        }
+        return ((MinecraftServer) FabricLoader.getInstance().getGameInstance());
+    }
+
+    @Environment(EnvType.CLIENT)
+    private static MinecraftServer getServerClient() {
+        if (!MinecraftClient.getInstance().isIntegratedServerRunning()) return null;
+        return MinecraftClient.getInstance().getServer();
     }
 
     @Override
@@ -138,7 +146,7 @@ public class VRPlatform implements ViaPlatform<UUID> {
 
     private TaskId runServerSync(Runnable runnable) {
         // Kick task needs to be on main thread, it does already have error logger
-        return new FutureTaskId(CompletableFuture.runAsync(runnable, it -> getServer().method_6444((Callable<Void>) () -> {
+        return new FutureTaskId(CompletableFuture.runAsync(runnable, it -> getServer().addTask((Callable<Void>) () -> {
             it.run();
             return null;
         })));
@@ -190,7 +198,7 @@ public class VRPlatform implements ViaPlatform<UUID> {
     @Override
     public ViaCommandSender[] getOnlinePlayers() {
         MinecraftServer server = getServer();
-        if (server != null && server.isOnThread()) {
+        if (server != null && server.isServerThread()) {
             return getServerPlayers();
         }
         return Via.getManager().getConnectedClients().values().stream()
@@ -199,7 +207,7 @@ public class VRPlatform implements ViaPlatform<UUID> {
     }
 
     private ViaCommandSender[] getServerPlayers() {
-        return getServer().getPlayerManager().getPlayers().stream()
+        return getServer().getPlayerManager().getPlayerList().stream()
                 .map(NMSCommandSender::new)
                 .toArray(ViaCommandSender[]::new);
     }
@@ -230,10 +238,10 @@ public class VRPlatform implements ViaPlatform<UUID> {
         Supplier<Boolean> kickTask = () -> {
             ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
             if (player == null) return false;
-            player.networkHandler.disconnect(s);
+            player.networkHandler.disconnect(Text.Serializer.fromJson(legacyToJson(s)));
             return true;
         };
-        if (server.method_34140()) {
+        if (server.isServerThread()) {
             return kickTask.get();
         } else {
             ViaFabric.JLOGGER.log(Level.WARNING, "Weird!? Player kicking was called off-thread", new Throwable());

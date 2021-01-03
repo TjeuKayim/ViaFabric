@@ -48,7 +48,7 @@ public abstract class MixinMultiplayerScreen extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
-        ButtonWidget enableClientSideViaVersion = new ViaButton("via".hashCode(), this.width / 2 + 113, 10,
+        ButtonWidget enableClientSideViaVersion = new ViaButton("via".hashCode(), this.field_27534 / 2 + 113, 10,
                 40, 20, // Size
                 0, 0, // Start pos of texture
                 20, // v Hover offset
@@ -56,7 +56,7 @@ public abstract class MixinMultiplayerScreen extends Screen {
                 256, 256, // Texture size
                 it -> MinecraftClient.getInstance().openScreen(new ViaConfigScreen(this)),
                 new TranslatableText("gui.via_button").asString());
-        if (ViaFabric.config.isHideButton()) enableClientSideViaVersion.visible = false;
-        this.buttons.add(enableClientSideViaVersion);
+        if (ViaFabric.config.isHideButton()) enableClientSideViaVersion.field_27192 = false;
+        this.method_29416(enableClientSideViaVersion);
     }
 }

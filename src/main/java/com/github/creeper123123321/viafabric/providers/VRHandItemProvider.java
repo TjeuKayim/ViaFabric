@@ -28,7 +28,6 @@ package com.github.creeper123123321.viafabric.providers;
 import com.github.creeper123123321.viafabric.ViaFabric;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -65,7 +64,8 @@ public class VRHandItemProvider extends HandItemProvider {
 
     @Environment(EnvType.CLIENT)
     public void registerClientTick() {
-        try {
+        // todo fabric api
+        /* try {
             WorldTickCallback.EVENT.register(world -> {
                 if (world.isClient) {
                     tickClient();
@@ -73,15 +73,15 @@ public class VRHandItemProvider extends HandItemProvider {
             });
         } catch (NoClassDefFoundError ignored2) {
             ViaFabric.JLOGGER.info("Fabric Lifecycle V0/V1 isn't installed");
-        }
+        }*/
     }
 
     public void registerServerTick() {
-        WorldTickCallback.EVENT.register(world -> {
+        /*WorldTickCallback.EVENT.register(world -> {
             if (!world.isClient) {
                 tickServer(world);
             }
-        });
+        });*/
     }
 
     private void tickClient() {
@@ -93,13 +93,13 @@ public class VRHandItemProvider extends HandItemProvider {
 
     private void tickServer(World world) {
         serverPlayers.clear();
-        world.playerEntities.forEach(it -> serverPlayers
+        world.field_23576.forEach(it -> serverPlayers
                 .put(it.getUuid(), fromNative(it.inventory.getMainHandStack())));
     }
 
     private Item fromNative(ItemStack original) {
-        int id = swordId(net.minecraft.item.Item.REGISTRY.getIdentifier(original.getItem()).toString());
-        return new Item(id, (byte) original.count, (short) original.getDamage(), null);
+        int id = swordId(net.minecraft.item.Item.REGISTRY.getId(original.getItem()).toString());
+        return new Item(id, (byte) original.getCount(), (short) original.getDamage(), null);
     }
 
     private int swordId(String id) {

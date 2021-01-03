@@ -47,7 +47,7 @@ public class MixinDebugHud {
         String line = "[ViaFabric] I: " + Via.getManager().getConnections().size() + " (F: "
                 + Via.getManager().getConnectedClients().size() + ")";
         @SuppressWarnings("ConstantConditions") ChannelHandler viaDecoder = ((MixinClientConnectionAccessor) MinecraftClient.getInstance().getNetworkHandler()
-                .getClientConnection()).getChannel().pipeline().get(CommonTransformer.HANDLER_DECODER_NAME);
+                .method_29934()).getChannel().pipeline().get(CommonTransformer.HANDLER_DECODER_NAME);
         if (viaDecoder instanceof FabricDecodeHandler) {
             ProtocolInfo protocol = ((FabricDecodeHandler) viaDecoder).getInfo().getProtocolInfo();
             if (protocol != null) {

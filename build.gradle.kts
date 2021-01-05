@@ -63,7 +63,7 @@ dependencies {
     implementation("com.google.guava:guava:23.5-jre")
     minecraft("com.mojang:minecraft:1.12.2")
     mappings("net.fabricmc:yarn:1.12.2+build.202012241947:v2")
-    modImplementation("net.fabricmc:fabric-loader-1.8.9:0.9.3+build.202009100647") {
+    modImplementation("net.fabricmc:fabric-loader:0.10.8") {
         exclude(mapOf("module" to "guava"))
     }
 

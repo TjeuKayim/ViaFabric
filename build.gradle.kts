@@ -3,7 +3,6 @@ import java.util.function.Function as JavaFunction
 
 plugins {
     `java-library`
-    id("net.minecrell.licenser") version "0.4.1"
     id("fabric-loom") version "0.6-SNAPSHOT"
     id("com.palantir.git-version") version "0.12.0-rc2"
     id("com.matthewprenger.cursegradle") version "1.4.0"
@@ -127,10 +126,6 @@ minecraft {
         "https://maven.legacyfabric.net/net/fabricmc/intermediary/$it/intermediary-$it-v2.jar"
     }
     accessWidener("src/main/resources/viafabric.accesswidener")
-}
-
-license {
-    include("**/*.java")
 }
 
 tasks.jar {

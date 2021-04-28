@@ -6,9 +6,9 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.realms.RealmsSharedConstants;
 import net.minecraft.server.MinecraftServer;
-import us.myles.ViaVersion.api.platform.ViaInjector;
-import us.myles.ViaVersion.util.GsonUtil;
-import us.myles.viaversion.libs.gson.JsonObject;
+import com.viaversion.viaversion.api.platform.ViaInjector;
+import com.viaversion.viaversion.util.GsonUtil;
+import com.viaversion.viaversion.libs.gson.JsonObject;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

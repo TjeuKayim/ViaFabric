@@ -3,9 +3,9 @@ package com.github.creeper123123321.viafabric.commands;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
-import us.myles.ViaVersion.api.command.ViaCommandSender;
-import us.myles.viaversion.libs.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import us.myles.viaversion.libs.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.viaversion.viaversion.api.command.ViaCommandSender;
+import com.viaversion.viaversion.libs.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import com.viaversion.viaversion.libs.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.UUID;
 

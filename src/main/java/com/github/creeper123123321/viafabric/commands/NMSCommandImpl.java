@@ -3,7 +3,7 @@ package com.github.creeper123123321.viafabric.commands;
 import net.minecraft.command.AbstractCommand;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.BlockPos;
-import us.myles.ViaVersion.api.command.ViaVersionCommand;
+import com.viaversion.viaversion.api.command.ViaVersionCommand;
 
 import java.util.Arrays;
 import java.util.List;

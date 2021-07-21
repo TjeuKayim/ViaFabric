@@ -11,7 +11,7 @@ plugins {
 }
 
 def ENV = System.getenv()
-def vvVer = "4.0.2-SNAPSHOT"
+def vvVer = "4.0.2-1.18-experimental1-SNAPSHOT"
 def yamlVer = "1.29"
 
 description = "Client-side and server-side ViaVersion implementation for Fabric"
@@ -54,6 +54,7 @@ allprojects {
     }
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url = "https://repo.viaversion.com/" }
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }

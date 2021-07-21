@@ -26,10 +26,6 @@ import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -84,32 +80,11 @@ public class ViaFabric implements ModInitializer {
         FabricLoader.getInstance().getEntrypoints("viafabric:via_api_initialized", Runnable.class).forEach(Runnable::run);
 
         registerCommandsV1();
-        registerGui();
 
         config = new VFConfig(FabricLoader.getInstance().getConfigDir().resolve("ViaFabric")
                 .resolve("viafabric.yml").toFile());
 
         INIT_FUTURE.complete(null);
-    }
-
-    private void registerGui() {
-        try {
-            ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-                if (!(screen instanceof MultiplayerScreen)) return;
-                ButtonWidget enableClientSideViaVersion = new TexturedButtonWidget(scaledWidth / 2 + 113, 10,
-                        40, 20, // Size
-                        0, 0, // Start pos of texture
-                        20, // v Hover offset
-                        new Identifier("viafabric:textures/gui/widgets.png"),
-                        256, 256, // Texture size
-                        it -> MinecraftClient.getInstance().setScreen(new ViaConfigScreen(screen)),
-                        new TranslatableText("gui.via_button"));
-                if (ViaFabric.config.isHideButton()) enableClientSideViaVersion.visible = false;
-                ((ScreenAccessor) screen).callAddDrawableChild(enableClientSideViaVersion);
-            });
-        } catch (NoClassDefFoundError ignored) {
-            JLOGGER.info("Couldn't register screen handler as Fabric Screen isn't installed");
-        }
     }
 
     private void registerCommandsV1() {
